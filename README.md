@@ -27,7 +27,7 @@
 | item_sales_status_id          | integer    | null: false |
 | item_shipping_fee_status_id   | integer    | null: false |
 | item_prefecture_id            | integer    | null: false |
-| item_scheduled-delivery_id    | integer    | null: false |
+| item_scheduled_delivery_id    | integer    | null: false |
 | item_price                    | integer    | null: false |
 | user        | references | null: false,foreign_key: true | 
 
@@ -53,16 +53,18 @@
 
 ## addresses テーブル
 
-| Column        | Type       | Options                        |
-| ------------- | ---------- | ------------------------------ |
-| post_code     | string     | null: false                    |
-| prefecture_id | integer    | null: false                    |
-| street_address| string     | null: false                    |
-| city          | string     | null: false                    |
-| block         | string     | null: false                    |
-| building      | string     |                                |
-| phone_number  | string     | null: false                    |
-| order         | reference  | null: false, foreign_key: true |
+| Column        | Type         | Options                        |
+| ------------- | ----------   | ------------------------------ |
+| post_code     | string       | null: false                    |
+| item_prefecture_id | integer | null: false                    |
+| street_address| string       | null: false                    |
+| city          | string       | null: false                    |
+| block         | string       | null: false                    |
+| building      | string       |                                |
+| phone_number  | string       | null: false                    |
+| order         | references   | null: false, foreign_key: true |
+
+
 ### Association
 
 
