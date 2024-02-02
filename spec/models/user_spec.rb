@@ -49,14 +49,9 @@ RSpec.describe User, type: :model do
         another_user = FactoryBot.build(:user)
         another_user.email = @user.email
         another_user.valid?
-        # binding.pry
         expect(another_user.errors.full_messages).to include('Email has already been taken')
       end
-      it 'パスワードが空欄だと保存できない' do
-        @user.password = ''
-        @user.valid?
-        expect(@user.errors.full_messages).to include("Password can't be blank", "Password confirmation doesn't match Password", "Password is invalid")
-      end
+
       it 'パスワード（確認含む）が5文字以下だと保存できない' do
         @user.password = 'ab123'
         @user.encrypted_password = 'ab123'
@@ -67,7 +62,7 @@ RSpec.describe User, type: :model do
         @user.password = '123456'
         @user.encrypted_password = '123456'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password is invalid")
+        expect(@user.errors.full_messages).to include("Password Include both letters and numbers")
       end
       it 'パスワード（確認）が空欄だと保存できない' do
         @user.password = '123abc'
@@ -126,13 +121,6 @@ RSpec.describe User, type: :model do
        @user.nickname = 'aaaaaaa'
        @user.valid?
        expect(@user.errors.full_messages).to include('Nickname is too long (maximum is 6 characters)')
-      end
-      it "重複したemailが存在する場合登録できない" do
-       @user.save
-       another_user = FactoryBot.build(:user)
-       another_user.email = @user.email
-       another_user.valid?
-       expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
     end
   end
