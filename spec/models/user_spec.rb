@@ -79,7 +79,6 @@ RSpec.describe User, type: :model do
         @user.first_name = 'tarou'
         @user.valid?
         expect(@user.errors.full_messages).to include("First name 全角文字を使用してください")
-
       end
       it '名字のフリガナが全角（カタカナ）でないと登録できない' do
         @user.last_name_kana = 'やまだ'
@@ -122,7 +121,6 @@ RSpec.describe User, type: :model do
        @user.valid?
        expect(@user.errors.full_messages).to include('Nickname is too long (maximum is 6 characters)')
       end
-
       it 'メールアドレスに@を含まない場合は登録できない' do
         @user.email = 'hogehuga.com'
         @user.valid?
