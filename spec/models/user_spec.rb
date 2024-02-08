@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   before do
     @user = FactoryBot.build(:user)
   end
@@ -62,7 +61,7 @@ RSpec.describe User, type: :model do
         @user.password = '123456'
         @user.encrypted_password = '123456'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Password Include both letters and numbers")
+        expect(@user.errors.full_messages).to include('Password Include both letters and numbers')
       end
       it 'パスワード（確認）が空欄だと保存できない' do
         @user.password = '123abc'
@@ -73,12 +72,12 @@ RSpec.describe User, type: :model do
       it '名字が全角（漢字・ひらがな・カタカナ）でないと登録できない' do
         @user.last_name = 'yamada'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Last name 全角文字を使用してください")
+        expect(@user.errors.full_messages).to include('Last name 全角文字を使用してください')
       end
       it '名前が全角（漢字・ひらがな・カタカナ）でないと登録できない' do
         @user.first_name = 'tarou'
         @user.valid?
-        expect(@user.errors.full_messages).to include("First name 全角文字を使用してください")
+        expect(@user.errors.full_messages).to include('First name 全角文字を使用してください')
       end
       it '名字のフリガナが全角（カタカナ）でないと登録できない' do
         @user.last_name_kana = 'やまだ'
@@ -101,30 +100,30 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Nickname can't be blank")
       end
       it 'emailが空では登録できない' do
-       @user.email = ''
-       @user.valid?
-       expect(@user.errors.full_messages).to include("Email can't be blank")
+        @user.email = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email can't be blank")
       end
       it 'passwordが空では登録できない' do
-       @user.password = ''
-       @user.valid?
-       expect(@user.errors.full_messages).to include("Password can't be blank")
+        @user.password = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password can't be blank")
       end
       it 'passwordとpassword_confirmationが不一致では登録できない' do
-       @user.password = '123456'
-       @user.encrypted_password = '1234567'
-       @user.valid?
-       expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
+        @user.password = '123456'
+        @user.encrypted_password = '1234567'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
       it 'nicknameが7文字以上では登録できない' do
-       @user.nickname = 'aaaaaaa'
-       @user.valid?
-       expect(@user.errors.full_messages).to include('Nickname is too long (maximum is 6 characters)')
+        @user.nickname = 'aaaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('Nickname is too long (maximum is 6 characters)')
       end
       it 'メールアドレスに@を含まない場合は登録できない' do
         @user.email = 'hogehuga.com'
         @user.valid?
-        expect(@user.errors.full_messages).to include("Email is invalid")
+        expect(@user.errors.full_messages).to include('Email is invalid')
       end
       it '姓（全角）が空だと登録できない' do
         @user.last_name = ''
@@ -155,12 +154,12 @@ RSpec.describe User, type: :model do
         @user.password = '123456'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
-      end 
+      end
       it '全角文字を含むパスワードでは登録できない' do
         @user.password = 'aaaaaaaa'
         @user.valid?
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
-      end 
+      end
     end
   end
 end
