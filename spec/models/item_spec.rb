@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.build(:item)
+    user = FactoryBot.create(:user) 
+    @item = FactoryBot.build(:item, user: user) 
   end
-
   describe '商品の出品登録' do
     context '出品登録ができるとき' do
       it '全ての入力事項が、存在すれば登録できる' do
@@ -37,9 +37,9 @@ RSpec.describe Item, type: :model do
     end
     context '出品ができないとき' do
       it 'ユーザー登録している人でないと出品できない' do
-        @item.item_name = nil
+        @item.user_id = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item name can't be blank")
+        expect(@item.errors.full_messages).to include("User must exist", "User can't be blank")
       end
       it '１枚画像がないと出品できない' do
         @item.image = nil
@@ -74,7 +74,7 @@ RSpec.describe Item, type: :model do
       it '商品の状態の情報が空欄だと出品できない' do
         @item.item_sales_status_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item sales status can't be blank")
+        expect(@item.errors.full_messages).to include("Item sales status is not a number")
       end
       it '配送料の負担の情報が「---」だと出品できない' do
         @item.item_shipping_fee_status_id = 0
@@ -94,7 +94,7 @@ RSpec.describe Item, type: :model do
       it '発送元の地域の情報が空欄だと出品できない' do
         @item.item_prefecture_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item prefecture can't be blank")
+        expect(@item.errors.full_messages).to include("Item prefecture is not a number")
       end
       it '発送までの日数の情報が「---」だと出品できない' do
         @item.item_scheduled_delivery_id = 0
@@ -104,7 +104,7 @@ RSpec.describe Item, type: :model do
       it '発送までの日数の情報が空欄だと出品できない' do
         @item.item_scheduled_delivery_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item scheduled delivery can't be blank")
+        expect(@item.errors.full_messages).to include("Item scheduled delivery is not a number")
       end
       it '価格が空欄だと出品できない' do
         @item.item_price = nil
@@ -118,6 +118,11 @@ RSpec.describe Item, type: :model do
       end
       it '価格の範囲が、9,999,999円を超えると出品できない' do
         @item.item_price = 10_000_000
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Item price must be an integer")
+      end
+      it '価格が半角数値ではない場合登録できない' do
+        @item.item_price = '０9012341234'
         @item.valid?
         expect(@item.errors.full_messages).to include("Item price must be an integer")
       end
