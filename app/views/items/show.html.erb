@@ -4,24 +4,23 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= @item.name %>
+      <%= @item.item_name %>
     </h2>
     <div class="item-img-content">
-      <%= image_tag "item-sample.png" ,class:"item-box-img" %>
+       <%= image_tag @item.image.variant(resize: '500x500'), class: "item-img" if @item.image.attached? %>
       <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <% if item.item_prefecture.present?  %>
-       <div class='sold-out'>
-       <span>Sold Out</span>
-       </div>
-       <% end %>
+          <% if @item.item_prefecture_id.present?  %>
+          <div class='sold-out'>
+          <span>Sold Out</span>
+          </div>
+          <% end %>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
     </div>
     <div class="item-price-box">
-      <span class="item-price">
-        ¥ 999,999,999
+     <span><%= @item.item_price %>円<br>
       </span>
       <span class="item-postage">
-        <%= "配送料負担" %>
+        <%= @item.item_shipping_fee_status.name %>
       </span>
     </div>
 
@@ -55,7 +54,7 @@
         </tr>
         <tr>
           <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= @item.item_status.name %></td>
+          <td class="detail-value"><%= @item.item_sales_status.name %></td>
         </tr>
         <tr>
           <th class="detail-item">配送料の負担</th>

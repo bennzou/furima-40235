@@ -4,11 +4,11 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
 
-  belongs_to :category
-  belongs_to :prefecture
-  belongs_to :item_status
-  belongs_to :item_shipping_fee_status, class_name: 'ShippingCost'
-  belongs_to :shipping_cost
+  belongs_to :item_category
+  belongs_to :item_prefecture
+  belongs_to :item_sales_status
+  belongs_to :item_shipping_fee_status
+  belongs_to :item_scheduled_delivery
   belongs_to :shipping_date
 
   with_options presence: true do
