@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   
   belongs_to :user
+  has_one :order
   has_one_attached :image
 
   belongs_to :item_category
@@ -9,7 +10,6 @@ class Item < ApplicationRecord
   belongs_to :item_sales_status
   belongs_to :item_shipping_fee_status
   belongs_to :item_scheduled_delivery
-  belongs_to :shipping_date
 
   with_options presence: true do
     validates :image
