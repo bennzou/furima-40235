@@ -1,16 +1,16 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update]
 
 
   def new
     @item = Item.new
   end
 
+
   def index
     @items = Item.includes(:user).order('created_at DESC')
   end
-
 
 
   def create
@@ -22,6 +22,19 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit
+    redirect_to root_path unless @item.user_id == current_user.id
+  end
+
+  def update
+    @item.update(item_params)
+    if @item.valid?
+      redirect_to item_path(item_params)
+    else
+      render 'edit', status: :unprocessable_entity
+    end
+  end
+
   private
 
   def item_params
@@ -30,7 +43,6 @@ class ItemsController < ApplicationController
   end
 
   def set_item
-    @item = Item.all
+    @item = Item.find(params[:id])
   end
-
 end

@@ -2,14 +2,14 @@ class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   
   belongs_to :user
+  has_one :order, class_name: 'Order'
   has_one_attached :image
 
-  belongs_to :category
-  belongs_to :prefecture
-  belongs_to :item_status
-  belongs_to :item_shipping_fee_status, class_name: 'ShippingCost'
-  belongs_to :shipping_cost
-  belongs_to :shipping_date
+  belongs_to :item_category
+  belongs_to :item_prefecture
+  belongs_to :item_sales_status
+  belongs_to :item_shipping_fee_status
+  belongs_to :item_scheduled_delivery
 
   with_options presence: true do
     validates :image
