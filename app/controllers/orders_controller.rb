@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
     before_action :set_item, only: [:index, :create]
   
     def index
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @order_form = OrderForm.new
     end
   
@@ -26,13 +27,12 @@ class OrdersController < ApplicationController
     end
 
     def pay_item
-      Payjp.api_key = "sk_test_687c2fb568e785bef9973258"  # 自身のPAY.JPテスト秘密鍵を記述しましょう
+      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]  # 自身のPAY.JPテスト秘密鍵を記述しましょう
         Payjp::Charge.create(
           amount: @item.item_price,  # 商品の値段
           card: order_params[:token],    # カードトークン
           currency: 'jpy'                 # 通貨の種類（日本円）
         )
-      )
     end
 
   

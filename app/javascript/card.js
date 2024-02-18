@@ -1,5 +1,6 @@
 const pay = () => {
-  const payjp = Payjp('pk_test_a88857fb5e5cd87e496e3198')// PAY.JPテスト公開鍵
+  const publicKey = gon.public_key
+  const payjp = Payjp(publicKey) // PAY.JPテスト公開鍵
   const elements = payjp.elements();
   const numberElement = elements.create('cardNumber');
   const expiryElement = elements.create('cardExpiry');
@@ -22,10 +23,11 @@ const pay = () => {
       numberElement.clear();
       expiryElement.clear();
       cvcElement.clear();
-      document.getElementById("charge-form").submit();
+      //document.getElementById("charge-form").submit();
     });
     e.preventDefault();
   });
 };
 
 window.addEventListener("turbo:load", pay);
+window.addEventListener("turbo:render", pay);
