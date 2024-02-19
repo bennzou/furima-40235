@@ -1,0 +1,7 @@
+{
+    "workbench.preferredLightColorTheme": "Monokai",
+    "explorer.decorations.colors": true,
+    "git.decorations.enabled": true,
+    "window.autoDetectColorScheme": true,
+    "workbench.colorTheme": "Monokai"
+}
