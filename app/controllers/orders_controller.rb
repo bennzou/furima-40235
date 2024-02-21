@@ -4,15 +4,14 @@ class OrdersController < ApplicationController
 
    
     def index
-      
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @order_form = OrderForm.new
+
     end
 
     def create
       @order_form = OrderForm.new(order_params)
       if @order_form.valid?
-
          pay_item
          @order_form.save
          redirect_to root_path
@@ -30,7 +29,9 @@ end
 
     def set_item
       @item = Item.find(params[:item_id])
-      redirect_to root_path if current_user.id == @item.user_id
+      if @item.user_id == current_user.id || @item.user_id != nil
+      redirect_to root_path 
+      end
     end
 
     def pay_item
