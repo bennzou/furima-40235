@@ -57,4 +57,5 @@ config.eager_load = ENV["CI"].present?
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.active_job.queue_adapter = :inline #追記
 end
