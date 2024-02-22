@@ -21,6 +21,11 @@ RSpec.describe OrderForm, type: :model do
         @order_form.post_code = '123-4560'
         expect(@order_form).to be_valid
       end
+
+      it '建物名がなくても保存できること' do
+        expect(@order_form).to be_valid
+      end
+
     end
     context '配送先情報の保存ができないとき' do
       it 'user_idが空だと保存できない' do
@@ -89,6 +94,12 @@ RSpec.describe OrderForm, type: :model do
         expect(@order_form.errors.full_messages).to include('Phone number is invalid')
       end
     
+      it '電話番号が9桁以下では保存できないこと' do
+        @order_form.phone_number = '12345678'
+        @order_form.valid?
+        expect(@order_form.errors.full_messages).to include('Phone number is invalid')
+      end
+
       it 'トークンが空だと保存できないこと' do
         @order_form.token = nil
         @order_form.valid?
