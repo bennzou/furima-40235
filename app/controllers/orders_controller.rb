@@ -2,11 +2,12 @@ class OrdersController < ApplicationController
     before_action :authenticate_user!
     before_action :set_item, only: [:index, :create]
 
-   
     def index
       gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
       @order_form = OrderForm.new
-
+      if user_signed_in? && current_user.id != @order_form.user_id 
+        redirect_to root_path
+      end
     end
 
     def create
@@ -19,7 +20,7 @@ class OrdersController < ApplicationController
         gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
         render 'index', status: :unprocessable_entity
       end
-end
+  end
   
     private
   
@@ -29,8 +30,6 @@ end
 
     def set_item
       @item = Item.find(params[:item_id])
-      if @item.user_id == current_user.id || @item.user_id != nil
-      redirect_to root_path 
       end
     end
 
@@ -42,4 +41,3 @@ end
           currency: 'jpy'                 # 通貨の種類（日本円）
         )
     end
-  end
