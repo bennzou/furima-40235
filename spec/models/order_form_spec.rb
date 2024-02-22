@@ -23,6 +23,7 @@ RSpec.describe OrderForm, type: :model do
       end
 
       it '建物名がなくても保存できること' do
+        @order_form.building = ''  
         expect(@order_form).to be_valid
       end
 
