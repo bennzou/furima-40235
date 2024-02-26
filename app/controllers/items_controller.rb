@@ -21,7 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    if   @item.user_id != current_user.id || @item.order 
+    if @item.user_id != current_user.id || @item.order 
       redirect_to root_path
     end
   end
@@ -38,8 +38,7 @@ class ItemsController < ApplicationController
 
 
   def update
-    if @item.valid?
-      @item.update(item_params)
+    if @item.update(item_params)
       redirect_to item_path(item_params)
     else
       render 'edit', status: :unprocessable_entity
